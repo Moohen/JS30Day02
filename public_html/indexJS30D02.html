@@ -1,0 +1,53 @@
+<!DOCTYPE html>     <!-- Wszystkie komentarze mają charakter dydaktyczny -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+  <link rel="stylesheet" href="styleJS30D02.css">
+</head>
+<body>
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+<script>
+  const secondHand = document.querySelector('.second-hand'); // zmienna stała "secondHand" została przypisana do elementu div o klasie .second-hand
+  const minsHand = document.querySelector('.min-hand'); // zmienna stała "minsHand" została przypisana do elementu div o klasie .min-hand
+  const hourHand = document.querySelector('.hour-hand'); // zmienna stała "hourHand" została przypisana do elementu div o klasie .hour-hand
+
+  const allHands = document.querySelectorAll('.hand'); // zmienna stała "allHands" została przypisana do wszystkich elementów o klasie .hand
+
+  function setDate() { // funkcja setDate() pobiera aktualny czas w sekudnach, minutach i godzinach, a następnie przekierowuje go do poszczególnych klas, by za pomocą wartości w stopniach ustalić pozycję wskazówek na tarczy zegara
+    const now = new Date(); // zmienna stała "now" została przypisana do instancji Date()
+
+    const seconds = now.getSeconds(); // zmienna stała "seconds" została przypisana za pomocą pobrania wartości aktualnego czasu(sekudna)
+    const secondsDegrees = ((seconds / 60) * 360) + 90; // zmienna stała "secondsDegrees" została przypisana do zmiennej stałej "seconds", która została podzielona przez 60(ilość seknud w minucie) i przemnożona przez 360(ilość stopni w kole), a pastępnie do całości dodano 90, by wskazówka była ustawiona w pozycji wertykalnej, tak jak w zegarze, a nie jak domyślnie, czyli horyzontalnej
+    secondHand.style.transform = `rotate(${secondsDegrees}deg)`; // do zmiennej stałej "secondHand" została przypisana właściwość transform, którą przypisano do wartości "rotate" posiadającej wartość zmiennej stałej "secondsDegrees" oraz do zmiennej stałej "secondsDegrees" przypisano parametr "deg"
+
+    const mins = now.getMinutes(); // zmienna stała "mins" została przypisana za pomocą pobrania wartości aktualnego czasu(minuta)
+    const minsDegrees = ((mins / 60) * 360) + 90; // zmienna stała "minsDegrees" została przypisana do zmiennej stałej "mins", która została podzielona przez 60(ilość minut w godzinie) i przemnożona przez 360(ilość stopni w kole), a pastępnie do całości dodano 90, by wskazówka była ustawiona w pozycji wertykalnej, tak jak w zegarze, a nie jak domyślnie, czyli horyzontalnej
+    minsHand.style.transform = `rotate(${minsDegrees}deg)`; // do zmiennej stałej "minsHand" została przypisana właściwość transform, którą przypisano do wartości "rotate" posiadającej wartość zmiennej stałej "minsDegrees" oraz do zmiennej stałej "minsDegrees" przypisano parametr "deg"
+
+    const hour = now.getHours(); // zmienna stała "hour" została przypisana za pomocą pobrania wartości aktualnego czasu(godzina)
+    const hourDegrees = ((hour / 12) * 360) + 90; // zmienna stała "hourDegrees" została przypisana do zmiennej stałej "hour", która została podzielona przez 12(ilość godzin na zegarze) i przemnożona przez 360(ilość stopni w kole), a pastępnie do całości dodano 90, by wskazówka była ustawiona w pozycji wertykalnej, tak jak w zegarze, a nie jak domyślnie, czyli horyzontalnej
+    hourHand.style.transform = `rotate(${hourDegrees}deg)`; // do zmiennej stałej "hourHand" została przypisana właściwość transform, którą przypisano do wartości "rotate" posiadającej wartość zmiennej stałej "hourDegrees" oraz do zmiennej stałej "hourDegrees" przypisano parametr "deg"
+    
+    if(seconds === 0 || mins === 0 || hour === 0) {
+      allHands.forEach(hand => hand.style.transition = 'none');
+    } else {
+      allHands.forEach(hand => hand.style.transition = '');
+    }
+  }
+
+  setInterval(setDate, 1000); // wykonuje interwał w funkcji setDate() co 1000 milisekund, czyli co 1 sekundę
+
+  setDate(); // wywołuje funkcje setDate()
+
+</script>
+</body>
+</html>
